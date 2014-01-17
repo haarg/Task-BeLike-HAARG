@@ -16,7 +16,33 @@ WriteMakefile(
     ABSTRACT => 'Modules haarg uses or wrote',
 
     PREREQ_PM => { map { ( $_ => 0 ) } @modules, qw(
-        Bundle::CPANxxl
+        ExtUtils::MakeMaker
+        Test::Harness
+        ExtUtils::CBuilder
+        File::Temp
+        Test::More
+        Data::Dumper
+        IO::Compress::Base
+        Compress::Zlib
+        IO::Zlib
+        Archive::Tar
+        Module::Build
+        File::Spec
+        Digest::SHA
+        File::HomeDir
+        Archive::Zip
+        Net::FTP
+        Term::ReadKey
+        Term::ReadLine::Perl
+        Parse::CPAN::Meta
+        Text::Glob
+        CPAN
+        File::Which
+        IO::Tty
+        Expect
+        Module::Signature
+        CPAN::Reporter
+        Kwalify
         CPAN::SQLite
 
         strictures
