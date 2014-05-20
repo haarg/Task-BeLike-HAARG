@@ -44,6 +44,8 @@ WriteMakefile(
         Kwalify
         CPAN::SQLite
 
+        Devel::PatchPerl
+
         strictures
         indirect
         multidimensional
@@ -76,6 +78,7 @@ WriteMakefile(
         Moo
         MooX::Types::MooseLike
         MooX::HandlesVia
+        Type::Tiny
 
         App::FatPacker
         Object::Remote
