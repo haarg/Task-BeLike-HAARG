@@ -2,12 +2,11 @@ use strict;
 use ExtUtils::MakeMaker;
 use JSON::PP;
 my $my_module_data = JSON::PP::decode_json(
-    scalar `curl -s 'http://api.metacpan.org/v0/release/_search?q=author:HAARG&filter=status:latest&fields=name,status&size=100'`
+    scalar `curl -s 'http://api.metacpan.org/v0/release/_search?q=author:HAARG+AND+status:latest&fields=name&size=100'`
 );
 my @modules =
-    map { my $n = $_->{name}; $n =~ s/-[\d._]+$//; $n =~ s/-/::/g; $n }
-    grep { $_->{status} eq 'latest' }
-    map { $_->{fields} }
+    map { s/-[\d._]+$//; s/-/::/g; $_ }
+    map { $_->{fields}{name} }
     @{ $my_module_data->{hits}{hits} };
 
 WriteMakefile(
