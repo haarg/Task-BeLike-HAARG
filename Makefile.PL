@@ -67,6 +67,8 @@ WriteMakefile(
         AnyEvent
         Coro
         Twiggy
+        EV
+        Feersum
 
         Moose
 
@@ -87,6 +89,7 @@ WriteMakefile(
         Devel::Dwarn
         Devel::NYTProf
         Dumbbench
+        App::Nopaste
 
         DBIx::Class
         Catalyst::Devel
