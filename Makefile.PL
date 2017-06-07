@@ -2,7 +2,7 @@ use strict;
 use ExtUtils::MakeMaker;
 use JSON::PP;
 my $my_module_data = JSON::PP::decode_json(
-    scalar `curl -s 'http://api.metacpan.org/v0/release/_search?q=author:HAARG+AND+status:latest&fields=name&size=100'`
+    scalar `curl -s 'https://fastapi.metacpan.org/v1/release/_search?q=author:HAARG+AND+status:latest&fields=name&size=100'`
 );
 my @modules =
     map { s/-[\d._]+$//; s/-/::/g; $_ }
