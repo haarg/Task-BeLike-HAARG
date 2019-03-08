@@ -10,4 +10,8 @@
 cover_db
 nytprof*
 /inc/
-README
+/README
+/MANIFEST.SKIP
+/Distar
+/Task-BeLike-HAARG-*.tar.gz
+/Task-BeLike-HAARG-*/

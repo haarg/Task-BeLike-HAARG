@@ -1,113 +1,204 @@
 use strict;
-use ExtUtils::MakeMaker;
-use JSON::PP;
+use warnings FATAL => 'all';
+use 5.006;
+
+my %META = (
+  name => 'Task-BeLike-HAARG',
+  license => 'perl_5',
+  prereqs => {
+    configure => { requires => {
+      'ExtUtils::MakeMaker'   => 0,
+    } },
+    build => { requires => {
+    } },
+    test => { requires => {
+    } },
+    runtime => {
+      requires => {
+        map +($_ => 0), qw(
+          ExtUtils::MakeMaker
+          Test::Harness
+          Module::Build
+          Module::Build::Tiny
+          ExtUtils::CBuilder
+          File::Temp
+          File::Spec
+          Test::More
+          Data::Dumper
+          IO::Compress::Base
+          Compress::Zlib
+          IO::Zlib
+          Archive::Tar
+          Archive::Tar::Wrapper
+          Archive::Zip
+          Digest::SHA
+          File::HomeDir
+          Net::FTP
+          Term::ReadKey
+          Term::ReadLine::Perl
+          Parse::CPAN::Meta
+          Text::Glob
+          CPAN
+          File::Which
+          IO::Tty
+          Expect
+          Module::Signature
+          CPAN::Reporter
+          Kwalify
+          CPAN::SQLite
+
+          Devel::PatchPerl
+
+          strictures
+          indirect
+          multidimensional
+          bareword::filehandles
+
+          Safe::Isa
+          curry
+          Import::Into
+
+          JSON
+          JSON::XS
+          Cpanel::JSON::XS
+          JSON::MaybeXS
+          YAML
+          YAML::XS
+
+          Plack
+          Starman
+          Gazelle
+
+          AnyEvent
+          Coro
+          Twiggy
+          EV
+          Feersum
+
+          Moose
+
+          Dist::Zilla
+          Dist::Zilla::Plugin::Git
+          Dist::Zilla::Plugin::PodWeaver
+          Dist::Zilla::PluginBundle::Author::ETHER
+
+          Moo
+          MooX::Types::MooseLike
+          MooX::HandlesVia
+          Type::Tiny
+
+          App::FatPacker
+          Object::Remote
+
+          Carp::Always
+          Devel::Dwarn
+          Devel::NYTProf
+          Dumbbench
+          App::Nopaste
+
+          DBIx::Class
+          Catalyst::Devel
+
+          LWP
+          LWP::Protocol::https
+          Daemon::Control
+          Module::CoreList
+
+          Module::Install
+          Module::Install::Repository
+          Module::Install::ExtraTests
+
+          App::cpm
+          App::cpanoutdated
+          CPAN::Uploader
+        ),
+      },
+    },
+    develop => {
+      requires => {
+      },
+    },
+  },
+  resources => {
+    repository => {
+      url => 'https://github.com/haarg/Task-BeLike-HAARG.git',
+      web => 'https://github.com/haarg/Task-BeLike-HAARG',
+      type => 'git',
+    },
+    bugtracker => {
+      web => 'https://github.com/haarg/Task-BeLike-HAARG/issues',
+    },
+    license => [ 'http://dev.perl.org/licenses/' ],
+  },
+  no_index => {
+    directory => [ 't', 'xt' ]
+  },
+);
+
+require JSON::PP;
+
 my $my_module_data = JSON::PP::decode_json(
-    scalar `curl -s 'https://fastapi.metacpan.org/v1/release/_search?q=author:HAARG+AND+status:latest&fields=name&size=100'`
+  scalar `curl -s 'https://fastapi.metacpan.org/v1/release/latest_by_author/HAARG'`
 );
+
 my @modules =
-    map { s/-[\d._]+$//; s/-/::/g; $_ }
-    map { $_->{fields}{name} }
-    @{ $my_module_data->{hits}{hits} };
+  sort
+  map { s/-/::/g; $_ }
+  map { $_->{distribution} }
+  @{ $my_module_data->{releases} };
 
-WriteMakefile(
-    NAME => 'Task::BeLike::HAARG',
-    VERSION => '0.001000',
-    ABSTRACT => 'Modules haarg uses or wrote',
+my $req = $META{prereqs}{runtime}{requires};
+$req->{$_} ||= 0
+  for @modules;
 
-    PREREQ_PM => { map { ( $_ => 0 ) } @modules, qw(
-        ExtUtils::MakeMaker
-        Test::Harness
-        ExtUtils::CBuilder
-        File::Temp
-        Test::More
-        Data::Dumper
-        IO::Compress::Base
-        Compress::Zlib
-        IO::Zlib
-        Archive::Tar
-        Module::Build
-        File::Spec
-        Digest::SHA
-        File::HomeDir
-        Archive::Zip
-        Net::FTP
-        Term::ReadKey
-        Term::ReadLine::Perl
-        Parse::CPAN::Meta
-        Text::Glob
-        CPAN
-        File::Which
-        IO::Tty
-        Expect
-        Module::Signature
-        CPAN::Reporter
-        Kwalify
-        CPAN::SQLite
-
-        Devel::PatchPerl
-
-        strictures
-        indirect
-        multidimensional
-        bareword::filehandles
-
-        Safe::Isa
-        curry
-        Import::Into
-
-        JSON::XS
-        JSON
-        JSON::MaybeXS
-        YAML
-        YAML::XS
-
-        Plack
-        Starman
-
-        AnyEvent
-        Coro
-        Twiggy
-        EV
-        Feersum
-
-        Moose
-
-        Dist::Zilla
-        Dist::Zilla::Plugin::Git
-        Dist::Zilla::Plugin::PodWeaver
-        Dist::Zilla::PluginBundle::Author::ETHER
-
-        Moo
-        MooX::Types::MooseLike
-        MooX::HandlesVia
-        Type::Tiny
-
-        App::FatPacker
-        Object::Remote
-
-        Carp::Always
-        Devel::Dwarn
-        Devel::NYTProf
-        Dumbbench
-        App::Nopaste
-
-        DBIx::Class
-        Catalyst::Devel
-
-        LWP
-        LWP::Protocol::https
-        Daemon::Control
-        Module::CoreList
-
-        Module::Install
-        Module::Install::Repository
-        Module::Install::ExtraTests
-
-        App::cpanoutdated
-        CPAN::Uploader
-    )},
-);
+my %MM_ARGS = ();
 
 sub MY::install {
     return '';
 }
+
+## BOILERPLATE ###############################################################
+require ExtUtils::MakeMaker;
+(do './maint/Makefile.PL.include' or die $@) unless -f 'META.yml';
+
+# have to do this since old EUMM dev releases miss the eval $VERSION line
+my $eumm_version  = eval $ExtUtils::MakeMaker::VERSION;
+my $mymeta        = $eumm_version >= 6.57_02;
+my $mymeta_broken = $mymeta && $eumm_version < 6.57_07;
+
+($MM_ARGS{NAME} = $META{name}) =~ s/-/::/g;
+($MM_ARGS{VERSION_FROM} = "lib/$MM_ARGS{NAME}.pm") =~ s{::}{/}g;
+$META{license} = [ $META{license} ]
+  if $META{license} && !ref $META{license};
+$MM_ARGS{LICENSE} = $META{license}[0]
+  if $META{license} && $eumm_version >= 6.30;
+$MM_ARGS{NO_MYMETA} = 1
+  if $mymeta_broken;
+$MM_ARGS{META_ADD} = { 'meta-spec' => { version => 2 }, %META }
+  unless -f 'META.yml';
+$MM_ARGS{PL_FILES} ||= {};
+$MM_ARGS{NORECURS} = 1
+  if not exists $MM_ARGS{NORECURS};
+
+for (qw(configure build test runtime)) {
+  my $key = $_ eq 'runtime' ? 'PREREQ_PM' : uc $_.'_REQUIRES';
+  my $r = $MM_ARGS{$key} = {
+    %{$META{prereqs}{$_}{requires} || {}},
+    %{delete $MM_ARGS{$key} || {}},
+  };
+  defined $r->{$_} or delete $r->{$_} for keys %$r;
+}
+
+$MM_ARGS{MIN_PERL_VERSION} = delete $MM_ARGS{PREREQ_PM}{perl} || 0;
+
+delete $MM_ARGS{MIN_PERL_VERSION}
+  if $eumm_version < 6.47_01;
+$MM_ARGS{BUILD_REQUIRES} = {%{$MM_ARGS{BUILD_REQUIRES}}, %{delete $MM_ARGS{TEST_REQUIRES}}}
+  if $eumm_version < 6.63_03;
+$MM_ARGS{PREREQ_PM} = {%{$MM_ARGS{PREREQ_PM}}, %{delete $MM_ARGS{BUILD_REQUIRES}}}
+  if $eumm_version < 6.55_01;
+delete $MM_ARGS{CONFIGURE_REQUIRES}
+  if $eumm_version < 6.51_03;
+
+ExtUtils::MakeMaker::WriteMakefile(%MM_ARGS);
+## END BOILERPLATE ###########################################################
