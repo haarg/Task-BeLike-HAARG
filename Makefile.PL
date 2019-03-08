@@ -2,9 +2,32 @@ use strict;
 use warnings FATAL => 'all';
 use 5.006;
 
+if (!-f 'META.yml') {
+  require JSON::PP;
+  require Data::Dumper;
+
+  my $my_module_data = JSON::PP::decode_json(
+      scalar `curl -s 'https://fastapi.metacpan.org/v1/release/latest_by_author/HAARG'`
+  );
+
+  my @modules =
+    sort
+    map { s/-/::/g; $_ }
+    map { $_->{distribution} }
+    @{ $my_module_data->{releases} };
+
+  open my $fh, '>', 'my_modules'
+    or die "can't create my_modules: $!";
+  $Data::Dumper::Indent = $Data::Dumper::Indent = 1;
+  $Data::Dumper::Terse = $Data::Dumper::Terse = 1;
+  print $fh Data::Dumper::Dumper(\@modules);
+  close $fh;
+}
+
 my %META = (
   name => 'Task-BeLike-HAARG',
   license => 'perl_5',
+  dynamic_config => 0,
   prereqs => {
     configure => { requires => {
       'ExtUtils::MakeMaker'   => 0,
@@ -112,6 +135,7 @@ my %META = (
           App::cpanoutdated
           CPAN::Uploader
         ),
+        @{ do('./my_modules') || [] },
       },
     },
     develop => {
@@ -134,22 +158,6 @@ my %META = (
     directory => [ 't', 'xt' ]
   },
 );
-
-require JSON::PP;
-
-my $my_module_data = JSON::PP::decode_json(
-  scalar `curl -s 'https://fastapi.metacpan.org/v1/release/latest_by_author/HAARG'`
-);
-
-my @modules =
-  sort
-  map { s/-/::/g; $_ }
-  map { $_->{distribution} }
-  @{ $my_module_data->{releases} };
-
-my $req = $META{prereqs}{runtime}{requires};
-$req->{$_} ||= 0
-  for @modules;
 
 my %MM_ARGS = ();
 
