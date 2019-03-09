@@ -41,36 +41,66 @@ my %META = (
         map +($_ => 0), qw(
           ExtUtils::MakeMaker
           Test::Harness
+          Test::More
           Module::Build
           Module::Build::Tiny
           ExtUtils::CBuilder
-          File::Temp
-          File::Spec
-          Test::More
-          Data::Dumper
-          IO::Compress::Base
-          Compress::Zlib
-          IO::Zlib
+
+          App::cpanoutdated
+          App::cpm
+          CPAN
+          CPAN::Reporter
+          CPAN::SQLite
+          CPAN::Uploader
+
           Archive::Tar
           Archive::Tar::Wrapper
           Archive::Zip
+          Clone
+          Compress::Zlib
+          Data::Dumper
+          Devel::PatchPerl
           Digest::SHA
+          Expect
+          ExtUtils::HasCompiler
           File::HomeDir
+          File::Spec
+          File::Temp
+          File::Which
+          Hash::Merge
+          IO::Compress::Base
+          IO::Tty
+          IO::Zlib
+          Kwalify
+          List::AllUtils
+          List::MoreUtils
+          Module::CoreList
+          Module::Info
+          Module::Signature
+          Module::Versions::Report
           Net::FTP
+          Ref::Util
+          Parse::CPAN::Meta
           Term::ReadKey
           Term::ReadLine::Perl
-          Parse::CPAN::Meta
+          Test::Roo
+          Test::Routine
           Text::Glob
-          CPAN
-          File::Which
-          IO::Tty
-          Expect
-          Module::Signature
-          CPAN::Reporter
-          Kwalify
-          CPAN::SQLite
+          V
 
-          Devel::PatchPerl
+          Module::Install
+          Module::Install::AuthorTests
+          Module::Install::Authority
+          Module::Install::Bugtracker
+          Module::Install::CPANfile
+          Module::Install::Catalyst
+          Module::Install::CheckLib
+          Module::Install::ExtraTests
+          Module::Install::InstallDirs
+          Module::Install::ManifestSkip
+          Module::Install::Repository
+          Module::Install::ShareFile
+          Module::Install::XSUtil
 
           strictures
           indirect
@@ -85,12 +115,20 @@ my %META = (
           JSON::XS
           Cpanel::JSON::XS
           JSON::MaybeXS
+          XML::Simple
           YAML
+          YAML::Syck
           YAML::XS
 
           Plack
           Starman
           Gazelle
+
+          Plack::Middleware::Header
+          Plack::Middleware::Rewrite
+          Plack::Middleware::ServerStatus::Lite
+          Plack::Middleware::Session
+          Plack::Test::Agent
 
           AnyEvent
           Coro
@@ -98,7 +136,10 @@ my %META = (
           EV
           Feersum
 
-          Moose
+          Future
+          IO::Async
+          IO::Async::SSL
+          Net::Async::HTTP
 
           Dist::Zilla
           Dist::Zilla::Plugin::Git
@@ -108,7 +149,16 @@ my %META = (
           Moo
           MooX::Types::MooseLike
           MooX::HandlesVia
+          MooX::StrictConstructor
           Type::Tiny
+          Moose
+          MooseX::Aliases
+          MooseX::ChainedAccessors
+          MooseX::ClassAttribute
+          MooseX::StrictConstructor
+          MooseX::Types::Path::Class::MoreCoercions
+          MooseX::Types::Structured
+          Pod::Coverage::Moose
 
           App::FatPacker
           Object::Remote
@@ -120,20 +170,53 @@ my %META = (
           App::Nopaste
 
           DBIx::Class
+
+          Catalyst
           Catalyst::Devel
+          Catalyst::Authentication::Store::Proxy
+          Catalyst::Controller::REST
+          Catalyst::Plugin::Authentication
+          Catalyst::Plugin::ConfigLoader
+          Catalyst::Plugin::Session
+          Catalyst::Plugin::Session::State::Cookie
+          Catalyst::Plugin::Session::Store
+          Catalyst::Plugin::Static::Simple
+          Catalyst::View::JSON
+          Catalyst::View::TT::Alloy
+          CatalystX::Component::Traits
+          CatalystX::InjectComponent
+          CatalystX::RoleApplicator
+
+          Mojolicious
+          Mojolicious::Plugin::MountPSGI
 
           LWP
           LWP::Protocol::https
+
+          MetaCPAN::Client
+          MetaCPAN::Moose
+          MetaCPAN::Role
+
+          Config::General
+          Config::ZOMG
+
           Daemon::Control
-          Module::CoreList
 
-          Module::Install
-          Module::Install::Repository
-          Module::Install::ExtraTests
+          Perl::Critic
+          Perl::Tidy
 
-          App::cpm
-          App::cpanoutdated
-          CPAN::Uploader
+          Code::TidyAll
+          Code::TidyAll::Plugin::Test::Vars
+          Code::TidyAll::Plugin::UniqueLines
+
+          DateTime
+          DateTime::Format::HTTP
+          DateTime::Format::ISO8601
+
+          Log::Contextual
+          Log::Any
+          Log::Dispatch
+          Log::Log4perl::Catalyst
         ),
         @{ do('./my_modules') || [] },
       },
