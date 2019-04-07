@@ -87,6 +87,7 @@ my %META = (
           Test::Routine
           Text::Glob
           V
+          Devel::Cover
 
           Module::Install
           Module::Install::AuthorTests
@@ -125,6 +126,7 @@ my %META = (
           Gazelle
 
           Plack::Middleware::Header
+          Plack::Middleware::Proxy
           Plack::Middleware::Rewrite
           Plack::Middleware::ServerStatus::Lite
           Plack::Middleware::Session
@@ -143,6 +145,8 @@ my %META = (
 
           Dist::Zilla
           Dist::Zilla::Plugin::Git
+          Dist::Zilla::Plugin::DualLife
+          Dist::Zilla::Plugin::OnlyCorePrereqs
           Dist::Zilla::Plugin::PodWeaver
           Dist::Zilla::PluginBundle::Author::ETHER
 
