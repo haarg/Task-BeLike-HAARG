@@ -124,8 +124,8 @@ my %META = (
           Starman
           Gazelle
 
+          Plack::App::Proxy
           Plack::Middleware::Header
-          Plack::Middleware::Proxy
           Plack::Middleware::Rewrite
           Plack::Middleware::ServerStatus::Lite
           Plack::Middleware::Session
