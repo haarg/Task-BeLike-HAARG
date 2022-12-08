@@ -98,7 +98,6 @@ my %META = (
           Module::Install::CheckLib
           Module::Install::ExtraTests
           Module::Install::InstallDirs
-          Module::Install::ManifestSkip
           Module::Install::Repository
           Module::Install::ShareFile
           Module::Install::XSUtil
